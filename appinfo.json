@@ -1,0 +1,17 @@
+{
+  "uuid": "f464ff5d-10d9-49b4-a540-d18a980e26d4",
+  "shortName": "Day Progress",
+  "longName": "Day Progress",
+  "companyName": "Jose Manuel Diez",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": true 
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}
