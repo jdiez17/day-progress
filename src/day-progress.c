@@ -30,6 +30,8 @@ void layer_update(Layer* l, GContext* ctx) {
 
     if(last_pixels > pixels_so_far || last_pixels == -1)
         clear_screen(ctx); // This happens once every day 
+    else if(last_pixels == pixels_so_far)
+        return; // Nothing to do
 
     last_pixels = pixels_so_far;
 
