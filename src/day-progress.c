@@ -1,26 +1,40 @@
 #include <pebble.h>
 
 // 86400 / (144 * 168)
-#define SECONDS_PER_PIXEL 3.57 
+#define SECFGDS_PER_PIXEL 3.57 
+
+// Change FG to GColorBlack to invert the watchface
+#define FG  GColorWhite 
+#define BG  (FG == GColorBlack ? GColorWhite : GColorBlack)
 
 Window* window;
 Layer* root_layer;
 struct tm last_time;
 
+int last_pixels = -1;
+
 void clear_screen(GContext* ctx) {
-    graphics_context_set_fill_color(ctx, GColorWhite);
+    graphics_context_set_fill_color(ctx, BG);
+
     graphics_fill_rect(ctx, (GRect) {
         .origin = GPointZero,
         .size = GSize(144, 168)
     }, 0, GCornerNone);
-    graphics_context_set_fill_color(ctx, GColorBlack);
+
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Cleared screen");
 }
 
 void layer_update(Layer* l, GContext* ctx) {
     int seconds_so_far = last_time.tm_hour * 3600 + last_time.tm_min * 60 + last_time.tm_sec;
-    int pixels_so_far = seconds_so_far / SECONDS_PER_PIXEL;
+    int pixels_so_far = seconds_so_far / SECFGDS_PER_PIXEL;
 
-    clear_screen(ctx); // TODO: Optimize this
+    if(last_pixels > pixels_so_far || last_pixels == -1)
+        clear_screen(ctx); // This happens once every day 
+
+    last_pixels = pixels_so_far;
+
+    graphics_context_set_fill_color(ctx, FG);
+    graphics_context_set_stroke_color(ctx, FG);
 
     // First: draw a rectangle that represents full lines so far
     int lines = (pixels_so_far / 144);
