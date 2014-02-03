@@ -1,7 +1,7 @@
 #include <pebble.h>
 
 // 86400 / (144 * 168)
-#define SECFGDS_PER_PIXEL 3.57 
+#define SECONDS_PER_PIXEL 3.57 
 
 // Change FG to GColorBlack to invert the watchface
 #define FG  GColorWhite 
@@ -26,7 +26,7 @@ void clear_screen(GContext* ctx) {
 
 void layer_update(Layer* l, GContext* ctx) {
     int seconds_so_far = last_time.tm_hour * 3600 + last_time.tm_min * 60 + last_time.tm_sec;
-    int pixels_so_far = seconds_so_far / SECFGDS_PER_PIXEL;
+    int pixels_so_far = seconds_so_far / SECONDS_PER_PIXEL;
 
     if(last_pixels > pixels_so_far || last_pixels == -1)
         clear_screen(ctx); // This happens once every day 
